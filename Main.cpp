@@ -34,16 +34,17 @@ int main(int argc, const char** argv)
 {
     if (argc == 1)
     {
-        std::cout << "Zero arguments" << '\n';
+        std::cout << "Welcome to MyCreature.\n";
+        std::cout << "To load an existing creature, please enter its name.\n";
+        std::cout << "To create a new creature press enter.\n";
+
+        std::getline(std::cin, existingCreature);
     }
     else if (argc > 1)
     {
-        std::cout << "More than one argument" << '\n';
         existingCreature = argv[1];
-        std::cout << "Creature name " << existingCreature << " given as an argument." << std::endl;
+        std::cout << "Loading existing creature: " << existingCreature << std::endl;
     }
-
-    //const std::filesystem::path sys_path{ argv[1] };
 
     std::cout << "Welcome to MyCreature.\n";
 
