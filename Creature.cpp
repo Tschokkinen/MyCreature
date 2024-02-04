@@ -1,6 +1,7 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include "Creature.h"
 #include <thread>
+#include "Helpers.h"
 
 void Creature::changeName()
 {
@@ -8,13 +9,9 @@ void Creature::changeName()
     char* newName = const_cast<char*>(name_ptr);
     char tmpName[256]{ '\0' };
     std::cin >> tmpName;
-
-
-    tmpName[0] = toupper(tmpName[0]);
-
-
+    // Capitalize first letter.
+    CapFirstLetter(tmpName);
     strcpy(newName, tmpName);
-    //std::cout << "My name is now " << name << std::endl;
 }
 
 const char* Creature::getName() const
@@ -177,15 +174,8 @@ void Creature::saveCreature(Creature* myCreature)
 void Creature::setNameInFile(std::string nameInFile)
 {
     char* newName = const_cast<char*>(name_ptr);
-    std::cout << "Creature name before to upper " << *newName << 'n';
-    
-    
-
-    newName[0] = toupper(newName[0]);
-    
-    
-    
-    std::cout << "Creature name to upper " << *newName << '\n';
+    // Capitalize first letter.
+    CapFirstLetter(newName);
     strcpy(newName, nameInFile.c_str());
 }
 
