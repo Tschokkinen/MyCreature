@@ -46,8 +46,6 @@ int main(int argc, const char** argv)
         std::cout << "Loading existing creature: " << existingCreature << std::endl;
     }
 
-    std::cout << "Welcome to MyCreature.\n";
-
     Creature myCreature{};
 
     myCreature.loadCreature(&myCreature, existingCreature);

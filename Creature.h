@@ -25,7 +25,7 @@ public:
     // Data management.
     void saveCreature(Creature* myCreature);
     //void loadCreature(Creature* myCreature);
-    void loadCreature(Creature* myCreature, std::string creatureName);
+    void loadCreature(Creature* myCreature, std::string& creatureName);
 
     // Functions for data loading.
     void setNameInFile(std::string nameInFile);

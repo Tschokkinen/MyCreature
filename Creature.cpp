@@ -109,7 +109,7 @@ void Creature::getStats()
     std::cout << "########" << '\n';
 }
 
-void Creature::loadCreature(Creature* myCreature, std::string existingCreature)
+void Creature::loadCreature(Creature* myCreature, std::string& existingCreature)
 {
     // If existingCreature string is empty, create a new creature
     if (existingCreature.empty())
