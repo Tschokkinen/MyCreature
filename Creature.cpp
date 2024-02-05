@@ -3,6 +3,7 @@
 #include <thread>
 #include "Helpers.h"
 
+
 void Creature::changeName()
 {
     std::cout << "Give your creature a name:\n";
@@ -162,9 +163,14 @@ void Creature::saveCreature(Creature* myCreature)
 
     std::ofstream creatureData(creatureName + ".txt", std::ios::out);
 
+    // Generate a string from creature assets for saving
+    std::stringstream ss;
+    ss << myCreature->getName() << '\n' << *myCreature->getEnergyLevel()
+        << '\n' << myCreature->getMood() << '\n' << myCreature->isSatisfied;
+    
     if (creatureData.is_open())
     {
-        creatureData << myCreature->getName() << '\n' << *myCreature->getEnergyLevel() << '\n' << myCreature->getMood() << '\n' << myCreature->isSatisfied;
+        creatureData << ss.rdbuf();
     }
 
     creatureData.close();

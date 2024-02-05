@@ -6,6 +6,7 @@
 #include<filesystem>
 #include<fstream>
 #include<boost/algorithm/string.hpp>
+#include <sstream>
 
 class Creature
 {
