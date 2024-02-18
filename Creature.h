@@ -62,6 +62,7 @@ private:
     const char* currentMood_ptr = currentMood;
 
     bool isSatisfied;
+    bool preventPrints;
 
     const int setMoodTimer{ 5000 };
     const int consumeEnergyTimer{ 5000 };

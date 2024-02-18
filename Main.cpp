@@ -7,6 +7,8 @@
 #include <ratio>
 #include <string>
 #include <limits>
+#include <future>
+#include <chrono>
 
 #include "Creature.h"
 //using namespace std;
@@ -27,6 +29,24 @@ void sayGoodbye(void)
 {
     std::cout << "Goodbye!" << std::endl;
 }
+
+void clearScreen()
+{
+    system("CLS");
+}
+
+
+
+//////////////////////////////////////
+
+void ClearLine(int lineNumber) {
+    std::cout << "\033[" << lineNumber << ";0H";  // Move to the specified line
+    std::cout << "\033[2K";  // Clear the line
+    std::cout << "content" << "\r";  // Print the updated content and move back to the beginning of the line
+    std::cout.flush();  // Ensure the output is flushed
+}
+//////////////////////////////////////
+
 
 std::string existingCreature{};
 
@@ -56,21 +76,28 @@ int main(int argc, const char** argv)
 
     std::atexit(sayGoodbye);
 
+    clearScreen();
+
     myCreature.getStats();
 
     while (true)
     {
-        int selection;
+        int selection{};
+        clearScreen();
+        myCreature.getStats();
+
         std::cout << "What do you want to do (enter number): \n";
         std::cout << "1) Change your creature's name.\n";
         std::cout << "2) Feed your creature.\n";
         std::cout << "3) Pet your creature.\n";
-        std::cout << "4) Get stats.\n";
+        std::cout << "4) Update stats.\n";
         std::cout << "0) Quit.\n";
+
         std::cin >> selection;
 
         if (selection == Creature::CHANGE_NAME)
         {
+            clearScreen();
             myCreature.changeName();
             continue;
         }
@@ -86,12 +113,14 @@ int main(int argc, const char** argv)
         }
         else if (selection == Creature::GET_STATS)
         {
-            myCreature.getStats();
+            //myCreature.getStats();
+            continue;
         }
         else if (selection == Creature::QUIT)
         {
             running = false;
             myCreature.stopStatusUpdate = true;
+            clearScreen();
             myCreature.saveCreature(&myCreature);
             t1.join();
             t2.join();

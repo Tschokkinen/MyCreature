@@ -6,6 +6,9 @@
 
 void Creature::changeName()
 {
+    // Prevent mood prints during name change
+    preventPrints = true;
+
     std::cout << "Give your creature a name:\n";
     char* newName = const_cast<char*>(name_ptr);
     char tmpName[256]{ '\0' };
@@ -13,6 +16,7 @@ void Creature::changeName()
     // Capitalize first letter.
     CapFirstLetter(tmpName);
     strcpy(newName, tmpName);
+    preventPrints = false;
 }
 
 const char* Creature::getName() const
@@ -37,10 +41,15 @@ void Creature::consumeEnergy(std::atomic<bool>& running)
     while (running)
     {
         std::this_thread::sleep_for(std::chrono::milliseconds(consumeEnergyTimer));
-        if (energyLevel > 0) {
+        if (energyLevel > 0 && !stopStatusUpdate) {
             energyLevel -= 0.5;
+            //std::cout << "\033[" << 4 << ";0H";  // Move to the specified line
+            //std::cout << "\033[2K";  // Clear the line
+            //std::cout << "Food level: " << *getEnergyLevel() << "\r";  // Print the updated content and move back to the beginning of the line
+            //std::cout.flush();  // Ensure the output is flushed
+            //std::cout << "\033[" << 13 << ";0H";  // Move to the specified line
         }
-        else
+        else if (energyLevel <= 0 && !stopStatusUpdate)
         {
             std::cout << name << " needs food!\n";
         }
@@ -93,10 +102,16 @@ void Creature::setMood(std::atomic<bool>& running)
         std::this_thread::sleep_for(std::chrono::milliseconds(setMoodTimer));
         end = std::chrono::high_resolution_clock::now();
         std::chrono::duration<double> timeSpan = duration_cast<std::chrono::duration<double>>(end - start);
-        if (timeSpan.count() > 5 && !stopStatusUpdate)
+        if (timeSpan.count() > 5 && !stopStatusUpdate && !preventPrints)
         {
             std::cout << "Your creature is sad. Try petting it.\n";
             isSatisfied = false;
+
+            //std::cout << "\033[" << 5 << ";0H";  // Move to the specified line
+            //std::cout << "\033[2K";  // Clear the line
+            //std::cout << "Mood: Sad" << "\r";  // Print the updated content and move back to the beginning of the line
+            //std::cout.flush();  // Ensure the output is flushed
+            //std::cout << "\033[" << 13 << ";0H";  // Move to the specified line
         }
     }
 }
