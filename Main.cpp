@@ -32,7 +32,8 @@ void sayGoodbye(void)
 
 void clearScreen()
 {
-    system("CLS");
+    //system("CLS"); // Windows only solution
+    std::cout << "\033[2J\033[H";
 }
 
 
